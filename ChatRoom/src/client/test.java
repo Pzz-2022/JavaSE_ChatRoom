@@ -41,7 +41,8 @@ public class test {
 
     public static void main(String[] args) {
         launch(args);
-    }*/
+    }
+    */
     public static void main(String[] args) {
         System.out.println("Holle World");
     }
