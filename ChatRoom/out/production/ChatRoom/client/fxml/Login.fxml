@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane prefHeight="400.0" prefWidth="520.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.controller.LoginController">
+   <children>
+      <AnchorPane prefHeight="57.0" prefWidth="520.0" style="-fx-background-color: #dddddd;" />
+      <AnchorPane layoutY="149.0" prefHeight="251.0" prefWidth="520.0" style="-fx-background-color: #dddddd;">
+         <children>
+            <Label alignment="CENTER" layoutX="60.0" layoutY="29.0" prefHeight="36.0" prefWidth="42.0" text="账号">
+               <font>
+                  <Font size="14.0" />
+               </font></Label>
+            <Label alignment="CENTER" layoutX="60.0" layoutY="77.0" prefHeight="36.0" prefWidth="42.0" text="密码">
+               <font>
+                  <Font size="14.0" />
+               </font></Label>
+            <TextField fx:id="uidField" layoutX="142.0" layoutY="29.0" prefHeight="36.0" prefWidth="260.0" promptText="请输入账号" />
+            <PasswordField fx:id="passwordField" layoutX="142.0" layoutY="77.0" prefHeight="36.0" prefWidth="260.0" promptText="请输入密码" />
+            <TextField fx:id="codeField" layoutX="142.0" layoutY="126.0" prefHeight="36.0" prefWidth="179.0" promptText="请输入验证码" />
+            <Button fx:id="okButton" layoutX="149.0" layoutY="171.0" mnemonicParsing="false" onAction="#okButtonOnAction" prefHeight="40.0" prefWidth="40.0" style="-fx-background-color: #dddddd;">
+               <graphic>
+                  <ImageView fitHeight="45.0" fitWidth="45.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../common/image/ok_hover.png" />
+                     </image>
+                  </ImageView>
+               </graphic></Button>
+            <Button fx:id="cancelButton" layoutX="320.0" layoutY="171.0" mnemonicParsing="false" onAction="#cancelButtonOnAction" prefHeight="40.0" prefWidth="40.0" style="-fx-background-color: #dddddd;">
+               <graphic>
+                  <ImageView fitHeight="45.0" fitWidth="45.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../common/image/cancel_hover.png" />
+                     </image>
+                  </ImageView>
+               </graphic></Button>
+            <Button fx:id="registerButton" layoutX="400.0" layoutY="29.0" mnemonicParsing="false" onAction="#registerButtonOnAction" prefHeight="36.0" prefWidth="60.0" text="注册" />
+            <Button fx:id="forgetButton" alignment="CENTER" layoutX="400.0" layoutY="77.0" mnemonicParsing="false" onAction="#forgetButtonOnAction" prefHeight="36.0" prefWidth="42.0" text="？" />
+            <Label alignment="CENTER" layoutX="54.0" layoutY="126.0" prefHeight="36.0" prefWidth="54.0" text="验证码">
+               <font>
+                  <Font size="14.0" />
+               </font></Label>
+            <Label fx:id="codeLabel" layoutX="333.0" layoutY="126.0" prefHeight="36.0" prefWidth="69.0" text="刷新👉" />
+            <Button fx:id="refreshButton" layoutX="401.0" layoutY="126.0" mnemonicParsing="false" onAction="#refreshButtonOnAction">
+               <graphic>
+                  <ImageView fitHeight="29.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../common/image/refresh.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+         </children></AnchorPane>
+      <Label fx:id="messageLabel" alignment="CENTER" layoutY="57.0" prefHeight="92.0" prefWidth="520.0" text="登录">
+         <font>
+            <Font size="24.0" />
+         </font></Label>
+      <ImageView fitHeight="53.0" fitWidth="78.0" layoutX="14.0" layoutY="77.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../common/image/suo.png" />
+         </image>
+      </ImageView>
+   </children>
+</AnchorPane>

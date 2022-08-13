@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.image.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefHeight="655.0" prefWidth="394.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.controller.haoyouziliaoController">
+   <children>
+      <SplitPane dividerPositions="0.30781010719754975" layoutX="101.0" layoutY="94.0" orientation="VERTICAL" prefHeight="655.0" prefWidth="394.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <items>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0" style="-fx-background-color: #00BFFF;">
+               <children>
+                  <ImageView fx:id="touxiang" fitHeight="200.0" fitWidth="200.0" layoutX="92.0" layoutY="-1.0" pickOnBounds="true" preserveRatio="true" />
+               </children>
+            </AnchorPane>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
+               <children>
+                  <Label fx:id="nameLabel" layoutX="52.0" layoutY="14.0" prefHeight="38.0" prefWidth="260.0" text="用户名">
+                     <font>
+                        <Font name="Forte" size="18.0" />
+                     </font>
+                  </Label>
+                  <Line endX="177.0" layoutX="174.0" layoutY="68.0" startX="-100.0" stroke="#a4a4a4" AnchorPane.leftAnchor="55.5" />
+                  <Label fx:id="gexingqianmingLabel" alignment="TOP_LEFT" layoutX="21.0" layoutY="78.0" prefHeight="80.0" prefWidth="352.0" text="这个人很懒..." />
+                  <Label fx:id="uidLabel" layoutX="126.0" layoutY="173.0" prefHeight="24.0" prefWidth="206.0" text="UID" />
+                  <Label fx:id="emailLabel" layoutX="126.0" layoutY="218.0" prefHeight="24.0" prefWidth="206.0" text="Email" />
+                  <Label fx:id="genderLabel" layoutX="126.0" layoutY="264.0" prefHeight="24.0" prefWidth="206.0" text="Gender" />
+                  <Label fx:id="ageLabel" layoutX="126.0" layoutY="309.0" prefHeight="24.0" prefWidth="206.0" text="Age" />
+                  <ImageView fitHeight="40.0" fitWidth="40.0" layoutX="46.0" layoutY="164.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../common/image/tubiao(1).png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fitHeight="40.0" fitWidth="40.0" layoutX="46.0" layoutY="208.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../common/image/tubiao(2).png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fitHeight="40.0" fitWidth="40.0" layoutX="46.0" layoutY="254.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../common/image/tubiao(3).png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fitHeight="40.0" fitWidth="40.0" layoutX="46.0" layoutY="300.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../common/image/tubiao(4).png" />
+                     </image>
+                  </ImageView>
+                  <Button layoutX="271.0" layoutY="384.0" mnemonicParsing="false" onAction="#shanchuhaoyouOnAction" text="删除好友" />
+               </children>
+            </AnchorPane>
+        </items>
+      </SplitPane>
+   </children>
+</AnchorPane>

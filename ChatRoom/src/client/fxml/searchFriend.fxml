@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.image.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefHeight="700.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.controller.SearchFriendController">
+   <children>
+      <SplitPane dividerPositions="0.2177650429799427" layoutX="154.0" layoutY="150.0" orientation="VERTICAL" prefHeight="700.0" prefWidth="500.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <items>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="212.0" prefWidth="498.0" style="-fx-background-color: #ffffff;">
+               <children>
+                  <ImageView fitHeight="63.0" fitWidth="315.0" layoutX="14.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../common/image/searchFriend.png" />
+                     </image>
+                  </ImageView>
+                  <TextField fx:id="searchField" layoutX="87.0" layoutY="84.0" prefHeight="40.0" prefWidth="260.0" />
+                  <Button layoutX="13.0" layoutY="80.0" mnemonicParsing="false" onAction="#searchFriendButtonOnAction" prefHeight="40.0" prefWidth="40.0" style="-fx-background-color: #ffffff;">
+                     <graphic>
+                        <ImageView fitHeight="36.0" fitWidth="36.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../common/image/search.png" />
+                           </image>
+                        </ImageView>
+                     </graphic></Button>
+                  <Label fx:id="messageLabel" layoutX="363.0" layoutY="86.0" prefHeight="36.0" prefWidth="112.0" textFill="RED" />
+               </children></AnchorPane>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0" style="-fx-background-color: #dddddd;">
+               <children>
+                  <ListView fx:id="searchFriendListView" layoutX="2.0" layoutY="2.0" prefHeight="541.0" prefWidth="498.0" style="-fx-background-color: #dddddd;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+               </children></AnchorPane>
+        </items>
+      </SplitPane>
+   </children>
+</AnchorPane>
