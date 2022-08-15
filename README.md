@@ -15,7 +15,7 @@
 4.  JavaFX
 
 #### 使用说明
-======记得把客户端仓库和服务端仓库建一下，俺用的绝对路径=====
+========记得把客户端仓库和服务端仓库建一下，俺用的绝对路径=======
 D:\Software\FileRecv\ChatRoom\ClientFileRecv
 D:\Software\FileRecv\ChatRoom\ServerFileRecv
 ![仓库路径](cangku.png)
