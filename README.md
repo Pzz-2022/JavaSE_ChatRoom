@@ -19,5 +19,4 @@
 ![数据库](https://foruda.gitee.com/images/1660360601447545316/屏幕截图.png "屏幕截图.png")
 ![user表](https://foruda.gitee.com/images/1660360646403907048/屏幕截图.png "屏幕截图.png")
 ![friend_ship表](https://foruda.gitee.com/images/1660360676816709873/屏幕截图.png "屏幕截图.png")
-![char_record表](https://foruda.gitee.com/images/1660360743972448420/屏幕截图.png "屏幕截图.png")
 ![char_record表](image.png)
