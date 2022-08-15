@@ -7,6 +7,7 @@ import common.util.IOUtil;
 import common.util.SocketUtil;
 import common.entity.User;
 
+import java.awt.*;
 import java.io.*;
 import java.net.Socket;
 import java.util.List;
@@ -295,7 +296,7 @@ public class ClientMethod {
         }
     }
 
-    public static List<Message> getAllFriendShipList(){
+    public static List<Message> getAllFriendShipList() {
         try (
                 Socket socket = new Socket("127.0.0.1", 7777);
                 OutputStream outputStream = socket.getOutputStream();
@@ -310,7 +311,7 @@ public class ClientMethod {
             objectOutputStream.writeObject(message);
 
             //接受一个消息
-            List<Message> allFriendShipList= (List<Message>) objectInputStream.readObject();
+            List<Message> allFriendShipList = (List<Message>) objectInputStream.readObject();
 
             return allFriendShipList;
         } catch (Exception e) {
@@ -373,7 +374,7 @@ public class ClientMethod {
         }
     }
 
-    public static void sendMessage(Message message){
+    public static void sendMessage(Message message) {
         try (
                 Socket socket = new Socket("127.0.0.1", 7777);
                 OutputStream outputStream = socket.getOutputStream();
@@ -392,4 +393,88 @@ public class ClientMethod {
         }
     }
 
+    public static void copyFile(File from, File to) {
+        try (
+                InputStream inputStream = new FileInputStream(from);
+                OutputStream outputStream = new FileOutputStream(to);
+        ) {
+            byte[] bytes = new byte[1024 * 8];
+            int len;
+            while ((len = inputStream.read(bytes)) != -1) {
+                outputStream.write(bytes, 0, len);
+            }
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public static void copyFileFromServer(File file) {
+        try (
+                Socket socket = new Socket("127.0.0.1", 7777);
+                OutputStream outputStream = socket.getOutputStream();
+                ObjectOutputStream objectOutputStream = new ObjectOutputStream(outputStream);
+                InputStream inputStream = socket.getInputStream();
+                ObjectInputStream objectInputStream = new ObjectInputStream(inputStream);
+                OutputStream fileOutputStream = new FileOutputStream(file);
+        ) {
+            Message message = new Message();
+            message.setType(Type.APPLY_FILE);
+            message.setObject(file.getName());
+            objectOutputStream.writeObject(message);
+
+            byte[] bytes = new byte[1024 * 8];
+            int len;
+            int sum =0;
+            while ((len = inputStream.read(bytes))!=-1) {
+                fileOutputStream.write(bytes, 0, len);
+                sum+=len;
+            }
+            System.out.println(sum);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public static void copyFileToServer(File file) {
+        try (
+                Socket socket = new Socket("127.0.0.1", 7777);
+                OutputStream outputStream = socket.getOutputStream();
+                ObjectOutputStream objectOutputStream = new ObjectOutputStream(outputStream);
+                InputStream inputStream = socket.getInputStream();
+                ObjectInputStream objectInputStream = new ObjectInputStream(inputStream);
+                InputStream fileInputStream = new FileInputStream(file);
+        ) {
+            Message message = new Message();
+            message.setType(Type.APPLY_FILE_TO_SERVER);
+            message.setObject(file.getName());
+            objectOutputStream.writeObject(message);
+            objectOutputStream.flush();
+
+            byte[] bytes = new byte[1024 *8];
+            int len;
+            int sum =0;
+            while ((len = fileInputStream.read(bytes))!=-1){
+                outputStream.write(bytes, 0, len);
+                sum+=len;
+            }
+            socket.shutdownOutput();
+            System.out.println(sum);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public static void openFile(File file) throws IOException {
+        if (!Desktop.isDesktopSupported()) {
+            System.out.println("Desktop is not supported");
+            return;
+        }
+
+        Desktop desktop = Desktop.getDesktop();
+        //let's try to open file
+        if (file.exists())
+            desktop.open(file);
+        else
+            System.out.println("文件不存在，无法打开。");
+    }
 }

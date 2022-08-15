@@ -1,6 +1,8 @@
 package client;
 
 
+import common.entity.Message;
+import common.entity.Type;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -10,8 +12,10 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import common.entity.User;
 
+import java.util.Date;
+
 public class test {
-    //没啥用的测试产品
+    //没啥用的测试
     /*
     private static UserLogin userLogin;
     {

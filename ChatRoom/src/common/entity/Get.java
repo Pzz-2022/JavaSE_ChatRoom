@@ -1,5 +1,9 @@
 package common.entity;
 
+import java.awt.*;
+import java.io.File;
+import java.io.IOException;
+import java.io.PushbackInputStream;
 import java.security.MessageDigest;
 import java.util.Random;
 
@@ -43,4 +47,5 @@ public class Get {
         }
         return MD5.toString();
     }
+
 }

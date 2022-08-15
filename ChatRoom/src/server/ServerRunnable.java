@@ -12,6 +12,7 @@ import java.net.Socket;
 import java.util.ArrayList;
 import java.util.Map;
 
+import static client.controller.MainController.chatRecordMap;
 import static client.controller.MainController.userLogin;
 
 public class ServerRunnable implements Runnable {
@@ -233,7 +234,7 @@ public class ServerRunnable implements Runnable {
 
                         if (b2) {
                             for (String s : MainServer.groupUid.get(message.getToUser())) {
-                                if (MainServer.socketMap.containsKey(s)){
+                                if (MainServer.socketMap.containsKey(s)) {
                                     OutputStream outputStream1 = MainServer.socketMap.get(s).getOutputStream();
                                     ObjectOutputStream objectOutputStream1 = new MyObjectOutputStream(outputStream1);
                                     message.setFromUser(s);
@@ -248,7 +249,12 @@ public class ServerRunnable implements Runnable {
 
                     case TEXT:
                         //文本类型消息
+                    case IMAGE:
+                        //图片类型消息
+                    case FILE:
+                        //文件类型
                         GetMysql.addChatRecord(message);
+                        MainServer.allChatRecord.add(message);
                         if (MainServer.socketMap.containsKey(message.getToUser())) {
                             OutputStream outputStream1 = MainServer.socketMap.get(message.getToUser()).getOutputStream();
                             ObjectOutputStream objectOutputStream1 = new MyObjectOutputStream(outputStream1);
@@ -277,8 +283,38 @@ public class ServerRunnable implements Runnable {
                         objectOutputStream.flush();
                         break;
 
+                    case APPLY_FILE:
+                        File file = new File(MainServer.ServerFileRecv + message.getObject());
+                        InputStream fileInputStream = new FileInputStream(file);
+                        byte[] bytes = new byte[1024 * 8];
+                        int len;
+                        int sum =0;
+                        while ((len = fileInputStream.read(bytes)) != -1) {
+                            outputStream.write(bytes, 0 , len);
+                            sum+=len;
+                        }
+                        System.out.println(sum);
+                        fileInputStream.close();
+                        socket.shutdownOutput();
+                        break;
+
+                    case APPLY_FILE_TO_SERVER:
+                        File file1 = new File(MainServer.ServerFileRecv + message.getObject());
+                        OutputStream fileOutputStream = new FileOutputStream(file1);
+                        byte[] bytes1 = new byte[1024 * 8];
+                        int len1;
+                        int sum1 =0;
+                        while ((len1 = inputStream.read(bytes1))!=-1){
+                            fileOutputStream.write(bytes1, 0, len1);
+                            sum1+=len1;
+                        }
+                        System.out.println(sum1);
+                        fileOutputStream.close();
+                        break;
+
+
                     default:
-                        System.out.println("未经处理的消息："+message);
+                        System.out.println("未经处理的消息：" + message);
                         break;
                 }
             }

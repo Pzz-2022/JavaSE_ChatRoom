@@ -200,13 +200,28 @@ public class GetMysql {
 
     public static boolean addChatRecord(Message message) throws SQLException {
         //加一条聊天记录
-        String sql = "insert into chat_record(from_user,to_user,send_time,content) values(?, ?, ?, ?);";
+        String sql = "insert into chat_record(from_user,to_user,send_time,content,type) values(?, ?, ?, ?, ?);";
         PreparedStatement preparedStatement = MainServer.conn.prepareStatement(sql);
 
         preparedStatement.setString(1, message.getFromUser());
         preparedStatement.setString(2, message.getToUser());
         preparedStatement.setLong(3, message.getSendTime());
         preparedStatement.setString(4, (String) message.getObject());
+        int type =0;
+        switch (message.getType()){
+            case TEXT:
+                //type=0;
+                break;
+
+            case IMAGE:
+                type=1;
+                break;
+
+            case FILE:
+                type=2;
+                break;
+        }
+        preparedStatement.setInt(5, type);
 
         int count = preparedStatement.executeUpdate();
         return count == 1;

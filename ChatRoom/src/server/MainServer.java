@@ -31,6 +31,8 @@ public class MainServer {
     public static List<Message> allChatRecord = new ArrayList<>();//储存聊天数据
     public static Map<String, List<String>> groupUid= new HashMap<>();//储存群中成员列表
 
+    public static final String ServerFileRecv = "D:\\Software\\FileRecv\\ChatRoom\\ServerFileRecv\\";
+
     static {
         //初始化所有数据
         try {
@@ -44,7 +46,6 @@ public class MainServer {
             ResultSet friendShip = GetMysql.selectAllFriendShip();
             while (friendShip.next()) {
                 addFriendShipToServer(friendShip);
-
                 if (users.get(friendShip.getString("uid2")).getHeadPortrait()==100){
                     if (!groupUid.containsKey(friendShip.getString("uid2")))
                         groupUid.put(friendShip.getString("uid2"), new ArrayList<>());
@@ -113,6 +114,10 @@ public class MainServer {
         message.setSendTime(resultSet.getLong("send_time"));
         message.setObject(resultSet.getString("content"));
         message.setType(Type.TEXT);
+        if (resultSet.getInt("type")==1)
+            message.setType(Type.IMAGE);
+        else if (resultSet.getInt("type")==2)
+            message.setType(Type.FILE);
         allChatRecord.add(message);
     }
 }

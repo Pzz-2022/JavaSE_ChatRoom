@@ -5,10 +5,10 @@ public enum Type {
     //用下划线分割每一个单词
     //用户发送信息类
     TEXT,//文本类型
+    IMAGE,//图片类型
     FILE,//文件类型
-    AGREE,//同意
-    REFUSE,//拒绝
-    USER,//用户类
+    APPLY_FILE,//申请文件
+    APPLY_FILE_TO_SERVER,//上传文件
     FRIEND_SHIP,//申请好友
     UP_FRIEND_SHIP,
 

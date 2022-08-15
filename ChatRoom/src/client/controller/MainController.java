@@ -22,14 +22,12 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 import common.entity.User;
 
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.io.OutputStream;
+import java.io.*;
 import java.net.Socket;
 import java.net.URL;
 import java.util.*;
@@ -91,6 +89,7 @@ public class MainController implements Initializable {
     public static Map<String, List<String>> groupUid;
     public static Map<String, User> users;
     static ClientReadThread clientReadThread;
+    public static final String ClientFileRecv = "D:\\Software\\FileRecv\\ChatRoom\\ClientFileRecv\\";
 
     {
         try {
@@ -416,13 +415,71 @@ public class MainController implements Initializable {
 
     @FXML
     void tupianButtonOnAction(ActionEvent event) {
+        if (userLogin.getSelectFriend() == null) {
+            return;
+        }
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("选择图片 - " + userLogin.getName());
+        fileChooser.setInitialDirectory(new File("D:\\image"));
+        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("图片类型", "*.png", "*.gif", "*.jpg", "*.jpeg"));
+        Stage stage = new Stage();
+        File file = fileChooser.showOpenDialog(stage);
+        if (file == null) {
+            return;
+        }
+        System.out.println(file.getAbsoluteFile());
 
+        Message message = new Message();
+        message.setType(Type.IMAGE);
+        message.setFromUser(userLogin.getUid());
+        message.setToUser(userLogin.getSelectFriend().getUid());
+
+        message.setObject(userLogin.getUid() + "_" + message.getSendTime() + "_" + file.getName());
+        File file1 = new File(ClientFileRecv + message.getObject().toString());
+        ClientMethod.copyFile(file, file1);
+
+        ClientMethod.sendMessage(message);
+
+        chatRecordMap.get(message.getToUser()).add(message);
+
+        changeChatRecord(userLogin.getSelectFriend().getUid());
+
+        ClientMethod.copyFileToServer(file1);
     }
 
 
     @FXML
     void wenjianButtonOnAction(ActionEvent event) {
+        if (userLogin.getSelectFriend() == null) {
+            return;
+        }
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("选择文件 - " + userLogin.getName());
+        fileChooser.setInitialDirectory(new File("D:\\image"));
+        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("文件类型", "*.*"));
+        Stage stage = new Stage();
+        File file = fileChooser.showOpenDialog(stage);
+        if (file == null) {
+            return;
+        }
+        System.out.println(file.getAbsoluteFile());
 
+        Message message = new Message();
+        message.setType(Type.FILE);
+        message.setFromUser(userLogin.getUid());
+        message.setToUser(userLogin.getSelectFriend().getUid());
+
+        message.setObject(userLogin.getUid() + "_" + message.getSendTime() + "_" + file.getName());
+        File file1 = new File(ClientFileRecv + message.getObject().toString());
+        ClientMethod.copyFile(file, file1);
+
+        ClientMethod.sendMessage(message);
+
+        chatRecordMap.get(message.getToUser()).add(message);
+
+        changeChatRecord(userLogin.getSelectFriend().getUid());
+
+        ClientMethod.copyFileToServer(file1);
     }
 
     public void bianjiziliaoOnAction(ActionEvent event) throws IOException {
@@ -455,7 +512,7 @@ public class MainController implements Initializable {
     }
 
     public void changeChatRecord(String uid) {
-        recordListView.setFixedCellSize(50);
+        //recordListView.setFixedCellSize(50);
         recordListView.setCellFactory(new Callback<ListView<Message>, ListCell<Message>>() {
             @Override
             public ListCell<Message> call(ListView<Message> param) {
@@ -464,74 +521,229 @@ public class MainController implements Initializable {
                     protected void updateItem(Message item, boolean empty) {
                         super.updateItem(item, empty);
 
-                        if (!empty) {
-                            ImageView touxiang = new ImageView("common/image/head/head(" + users.get(item.getFromUser()).getHeadPortrait() + ").jpeg");
-                            touxiang.setPreserveRatio(true);
-                            touxiang.setFitHeight(40);
+                        if (!empty)
+                            if (item.getType() == Type.TEXT) {
+                                //发送者的头像
+                                ImageView touxiang = new ImageView("common/image/head/head(" + users.get(item.getFromUser()).getHeadPortrait() + ").jpeg");
+                                touxiang.setPreserveRatio(true);
+                                touxiang.setFitHeight(40);
 
-                            //Label content = new Label((String) item.getObject());
+                                //Label content = new Label((String) item.getObject());
+                                //设置点击头像打开的资料界面
+                                if (item.getFromUser().equals(userLogin.getUid())) {
+                                    //content.setBackground(new Background(new BackgroundFill(new Color(0,0.8,0.9,0.6),null,null)));
+                                    touxiang.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                                        @Override
+                                        public void handle(MouseEvent event) {
+                                            try {
+                                                xiugaigerenxingxi(null);
+                                            } catch (IOException e) {
+                                                throw new RuntimeException(e);
+                                            }
+                                        }
+                                    });
+                                } else {
+                                    //content.setBackground(new Background(new BackgroundFill(new Color(0.8,0.8,0,0.6),null,null)));
+                                    touxiang.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                                        @Override
+                                        public void handle(MouseEvent event) {
+                                            try {
+                                                tarenxingxi(null);
+                                            } catch (IOException e) {
+                                                throw new RuntimeException(e);
+                                            }
+                                        }
+                                    });
+                                }
 
-                            if (item.getFromUser().equals(userLogin.getUid())) {
-                                //content.setBackground(new Background(new BackgroundFill(new Color(0,0.8,0.9,0.6),null,null)));
-                                touxiang.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                                HBox contentHBox = new HBox(3);
+                                String content = (String) item.getObject();
+                                String regex = "\\[1?\\d{1,2}\\]";
+                                Pattern pattern = Pattern.compile(regex);
+                                Matcher matcher = pattern.matcher(content);
+                                while (matcher.find()) {
+                                    String group = matcher.group();
+                                    Label label;
+                                    for (int i = 0; i < content.indexOf(group); i++) {
+                                        label = new Label(content.charAt(i) + "");
+                                        contentHBox.getChildren().add(label);
+                                    }
+                                    ImageView emoji = new ImageView(new Image("file:C:/Users/PP/IdeaProjects/ChatRoom/src/" +
+                                            "common/image/emoji/" + MainController.getIndex(group.substring(1, group.length() - 1)) + ".gif",
+                                            40, 40, true, true, true));
+                                    contentHBox.getChildren().add(emoji);
+
+                                    content = content.substring(content.indexOf(group));
+                                    content = content.replaceFirst(regex, "");
+                                }
+                                //contentHBox.getChildren().add(new Label(content));
+                                for (int i = 0; i < content.length(); i++) {
+                                    contentHBox.getChildren().add(new Label(content.charAt(i) + ""));
+                                }
+
+                                VBox contentVBox = new VBox(10);
+                                {
+                                    int count = contentHBox.getChildren().size();
+
+                                    HBox hBox = new HBox();
+                                    for (int i = 0; i < count; i++) {
+                                        if (i % 50 == 0) {
+                                            contentVBox.getChildren().add(hBox);
+                                            hBox = new HBox();
+                                        }
+                                        hBox.getChildren().add(contentHBox.getChildren().get(0));
+                                        if (i == count - 1) {
+                                            contentVBox.getChildren().add(hBox);
+                                        }
+                                    }
+                                }
+
+                                HBox hBox = new HBox(15);
+                                hBox.setPrefWidth(600);
+                                //hBox.setPrefHeight(50);
+                                if (item.getFromUser().equals(userLogin.getUid())) {
+                                    hBox.setAlignment(Pos.CENTER_RIGHT);
+                                    contentHBox.setAlignment(Pos.CENTER_RIGHT);
+                                    contentVBox.setAlignment(Pos.CENTER_RIGHT);
+                                    hBox.getChildren().addAll(contentVBox, touxiang);
+                                    this.setGraphic(hBox);
+                                } else {
+                                    hBox.setAlignment(Pos.CENTER_LEFT);
+                                    contentHBox.setAlignment(Pos.CENTER_LEFT);
+                                    contentVBox.setAlignment(Pos.CENTER_LEFT);
+                                    hBox.getChildren().addAll(touxiang, contentVBox);
+                                    this.setGraphic(hBox);
+                                }
+                                Platform.runLater(() -> {
+                                    recordListView.scrollTo(item);
+                                });
+
+                            } else if (item.getType() == Type.IMAGE) {
+                                //发送者的头像
+                                ImageView touxiang = new ImageView("common/image/head/head(" + users.get(item.getFromUser()).getHeadPortrait() + ").jpeg");
+                                touxiang.setPreserveRatio(true);
+                                touxiang.setFitHeight(40);
+                                //设置点击头像打开的资料界面
+                                if (item.getFromUser().equals(userLogin.getUid())) {
+                                    touxiang.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                                        @Override
+                                        public void handle(MouseEvent event) {
+                                            try {
+                                                xiugaigerenxingxi(null);
+                                            } catch (IOException e) {
+                                                throw new RuntimeException(e);
+                                            }
+                                        }
+                                    });
+                                } else {
+                                    touxiang.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                                        @Override
+                                        public void handle(MouseEvent event) {
+                                            try {
+                                                tarenxingxi(null);
+                                            } catch (IOException e) {
+                                                throw new RuntimeException(e);
+                                            }
+                                        }
+                                    });
+                                }
+
+                                File file = new File(ClientFileRecv + item.getObject());
+                                if (!file.exists()) {
+                                    ClientMethod.copyFileFromServer(file);
+                                }
+
+                                ImageView contentImageView = new ImageView(new Image("file:" + ClientFileRecv + item.getObject(),
+                                        200, 200, true, true, true));
+
+                                HBox hBox = new HBox(15);
+                                hBox.setPrefWidth(600);
+                                //hBox.setPrefHeight(50);
+                                if (item.getFromUser().equals(userLogin.getUid())) {
+                                    hBox.setAlignment(Pos.CENTER_RIGHT);
+                                    hBox.getChildren().addAll(contentImageView, touxiang);
+                                    this.setGraphic(hBox);
+                                } else {
+                                    hBox.setAlignment(Pos.CENTER_LEFT);
+                                    hBox.getChildren().addAll(touxiang, contentImageView);
+                                    this.setGraphic(hBox);
+                                }
+                            } else if (item.getType() == Type.FILE) {
+                                //发送者的头像
+                                ImageView touxiang = new ImageView("common/image/head/head(" + users.get(item.getFromUser()).getHeadPortrait() + ").jpeg");
+                                touxiang.setPreserveRatio(true);
+                                touxiang.setFitHeight(40);
+                                //设置点击头像打开的资料界面
+                                if (item.getFromUser().equals(userLogin.getUid())) {
+                                    touxiang.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                                        @Override
+                                        public void handle(MouseEvent event) {
+                                            try {
+                                                xiugaigerenxingxi(null);
+                                            } catch (IOException e) {
+                                                throw new RuntimeException(e);
+                                            }
+                                        }
+                                    });
+                                } else {
+                                    touxiang.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                                        @Override
+                                        public void handle(MouseEvent event) {
+                                            try {
+                                                tarenxingxi(null);
+                                            } catch (IOException e) {
+                                                throw new RuntimeException(e);
+                                            }
+                                        }
+                                    });
+                                }
+
+                                File file = new File(ClientFileRecv + item.getObject());
+                                if (!file.exists()) {
+                                    ClientMethod.copyFileFromServer(file);
+                                }
+
+                                ImageView contentImageView = new ImageView("common/image/wenjian.png");
+                                contentImageView.setPreserveRatio(true);
+                                contentImageView.setFitHeight(100);
+                                VBox vBox = new VBox(20);
+                                vBox.setAlignment(Pos.CENTER);
+                                Label fileNameLabel = new Label(((String) item.getObject())
+                                        .substring(((String) item.getObject()).lastIndexOf('_')+1));
+                                fileNameLabel.setMaxWidth(300);
+                                Button openFileButton = new Button("打开文件");
+                                openFileButton.setOnAction(new EventHandler<ActionEvent>() {
                                     @Override
-                                    public void handle(MouseEvent event) {
+                                    public void handle(ActionEvent event) {
                                         try {
-                                            xiugaigerenxingxi(null);
+                                            ClientMethod.openFile(file);
                                         } catch (IOException e) {
                                             throw new RuntimeException(e);
                                         }
                                     }
                                 });
+                                vBox.getChildren().addAll(fileNameLabel,openFileButton);
+                                HBox contentHBox = new HBox(0);
+                                contentHBox.getChildren().addAll(contentImageView,vBox);
+
+                                HBox hBox = new HBox(15);
+                                hBox.setPrefWidth(600);
+                                //hBox.setPrefHeight(50);
+                                if (item.getFromUser().equals(userLogin.getUid())) {
+                                    hBox.setAlignment(Pos.CENTER_RIGHT);
+                                    contentHBox.setAlignment(Pos.CENTER_RIGHT);
+                                    hBox.getChildren().addAll(contentHBox, touxiang);
+                                    this.setGraphic(hBox);
+                                } else {
+                                    hBox.setAlignment(Pos.CENTER_LEFT);
+                                    contentHBox.setAlignment(Pos.CENTER_LEFT);
+                                    hBox.getChildren().addAll(touxiang, contentHBox);
+                                    this.setGraphic(hBox);
+                                }
+
                             } else {
-                                //content.setBackground(new Background(new BackgroundFill(new Color(0.8,0.8,0,0.6),null,null)));
-                                touxiang.setOnMouseClicked(new EventHandler<MouseEvent>() {
-                                    @Override
-                                    public void handle(MouseEvent event) {
-                                        try {
-                                            tarenxingxi(null);
-                                        } catch (IOException e) {
-                                            throw new RuntimeException(e);
-                                        }
-                                    }
-                                });
+                                System.out.println("未处理的消息" + item);
                             }
-
-                            HBox contentHBox = new HBox(3);
-                            String content = (String) item.getObject();
-                            String regex = "\\[1?\\d{1,2}\\]";
-                            Pattern pattern = Pattern.compile(regex);
-                            Matcher matcher = pattern.matcher(content);
-                            while (matcher.find()) {
-                                String group = matcher.group();
-                                Label label = new Label(content.substring(0, content.indexOf(group)));
-                                ImageView emoji = new ImageView(new Image("file:C:/Users/PP/IdeaProjects/ChatRoom/src/" +
-                                        "common/image/emoji/" + MainController.getIndex(group.substring(1, group.length() - 1)) + ".gif",
-                                        40, 40, true, true, true));
-                                contentHBox.getChildren().addAll(label, emoji);
-
-                                content = content.substring(content.indexOf(group));
-                                content = content.replaceFirst(regex, "");
-                            }
-                            contentHBox.getChildren().add(new Label(content));
-
-                            HBox hBox = new HBox(15);
-                            hBox.setPrefWidth(600);
-                            hBox.setPrefHeight(50);
-                            if (item.getFromUser().equals(userLogin.getUid())) {
-                                hBox.setAlignment(Pos.CENTER_RIGHT);
-                                contentHBox.setAlignment(Pos.CENTER_RIGHT);
-                                hBox.getChildren().addAll(contentHBox, touxiang);
-                                this.setGraphic(hBox);
-                            } else {
-                                hBox.setAlignment(Pos.CENTER_LEFT);
-                                contentHBox.setAlignment(Pos.CENTER_LEFT);
-                                hBox.getChildren().addAll(touxiang, contentHBox);
-                                this.setGraphic(hBox);
-                            }
-
-                            recordListView.scrollTo(item);
-                        }
                     }
                 };
             }
