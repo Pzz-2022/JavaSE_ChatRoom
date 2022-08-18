@@ -89,7 +89,7 @@ public class registerController implements Initializable {
         }
         if (code.equalsIgnoreCase(codeField.getText())) {
             //调用注册的方法
-            User user = new User(uidField.getText(), nameField.getText(), Get.getMD5(passwordField1.getText()), genderChoiceBox.getValue(), getAge(ageField.getText()), EmailField.getText());
+            User user = new User(uidField.getText(), nameField.getText(), Get.getMD5(passwordField1.getText()), genderChoiceBox.getValue(), Integer.parseInt(ageField.getText()), EmailField.getText());
             user.setStates(0);
             if (ClientMethod.register(user)) {
                 messageLabel.setText("注册成功！");
@@ -115,7 +115,7 @@ public class registerController implements Initializable {
             for (EmailCode emailCode : emailCodes) {
                 if (emailCode.getEmail() .equalsIgnoreCase( EmailField.getText())&&codeField.getText().equalsIgnoreCase(emailCode.getCode())) {
                     //调用注册的方法
-                    User user = new User(uidField.getText(), nameField.getText(), Get.getMD5(passwordField1.getText()), genderChoiceBox.getValue(), getAge(ageField.getText()), EmailField.getText());
+                    User user = new User(uidField.getText(), nameField.getText(), Get.getMD5(passwordField1.getText()), genderChoiceBox.getValue(), Integer.parseInt(ageField.getText()), EmailField.getText());
                     user.setStates(0);
                     if (ClientMethod.register(user)) {
                         System.out.println("注册成功！");
@@ -226,7 +226,7 @@ public class registerController implements Initializable {
         } else if (genderChoiceBox.getValue() == null || genderChoiceBox.getValue().toString().length() < 1) {
             messageLabel.setText("未选择性别");
             return false;
-        } else if (getAge(ageField.getText()) < 1 || getAge(ageField.getText()) > 120) {
+        } else if (Integer.parseInt(ageField.getText()) < 1 || Integer.parseInt(ageField.getText()) > 120) {
             messageLabel.setText("年龄请填写1~120之间");
             return false;
         } else if (EmailField.getText().length()==0||!Check.checkQQEmail(EmailField.getText())){
@@ -249,13 +249,5 @@ public class registerController implements Initializable {
             }
         }
         return false;
-    }
-
-    private int getAge(String ageStr) {
-        int age = 0;
-        for (int i = 0; i < ageStr.length(); i++) {
-            age = age * 10 + ageStr.charAt(i) - '0';
-        }
-        return age;
     }
 }

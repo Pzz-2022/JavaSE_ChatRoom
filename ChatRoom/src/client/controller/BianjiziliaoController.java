@@ -69,7 +69,7 @@ public class BianjiziliaoController implements Initializable {
                 String format = simpleDateFormat.format(date);
                 System.out.println(format);
                 String[] splits = format.split("-");
-                birthdayDatePicker.setValue(LocalDate.of(getIntByString(splits[0]), getIntByString(splits[1]), getIntByString(splits[2])));
+                birthdayDatePicker.setValue(LocalDate.of(Integer.parseInt(splits[0]), Integer.parseInt(splits[1]), Integer.parseInt(splits[2])));
             }
         } catch (ParseException e) {
             System.out.println("无日期");
@@ -110,7 +110,7 @@ public class BianjiziliaoController implements Initializable {
 
     @FXML
     void okButtonOnAction(ActionEvent event) {
-        if (getIntByString(ageField.getText()) < 1 || getIntByString(ageField.getText()) > 120) {
+        if (Integer.parseInt(ageField.getText()) < 1 || Integer.parseInt(ageField.getText()) > 120) {
             messageLabel.setText("年龄请填写1~120之间");
             return;
         } else if (nameField.getText().length() == 0 || nameField.getText().length() > 20) {
@@ -127,7 +127,7 @@ public class BianjiziliaoController implements Initializable {
         User user = new User();
         user.setName(nameField.getText());
         user.setSignature(qianmingArea.getText());
-        user.setAge(getIntByString(ageField.getText()));
+        user.setAge(Integer.parseInt(ageField.getText()));
         user.setGender(genderChoiceBox.getValue());
         user.setHeadPortrait(touxiangChoiceBox.getValue());
         user.setUid(userLogin.getUid());
@@ -141,7 +141,7 @@ public class BianjiziliaoController implements Initializable {
 
             userLogin.setName(nameField.getText());
             userLogin.setSignature(qianmingArea.getText());
-            userLogin.setAge(getIntByString(ageField.getText()));
+            userLogin.setAge(Integer.parseInt(ageField.getText()));
             userLogin.setGender(genderChoiceBox.getValue());
             userLogin.setHeadPortrait(touxiangChoiceBox.getValue());
             userLogin.setBirthday(birthdayDatePicker.getValue().toString());
@@ -156,13 +156,5 @@ public class BianjiziliaoController implements Initializable {
     void cancelButtonOnAction(ActionEvent event) {
         Stage stage = (Stage) cancelButton.getScene().getWindow();
         stage.close();
-    }
-
-    private int getIntByString(String ageStr) {
-        int age = 0;
-        for (int i = 0; i < ageStr.length(); i++) {
-            age = age * 10 + ageStr.charAt(i) - '0';
-        }
-        return age;
     }
 }
