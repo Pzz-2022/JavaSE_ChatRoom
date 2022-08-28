@@ -49,18 +49,12 @@ public class test {
     */
     public static void main(String[] args) {
         System.out.println("Holle World");
-    }
-
-}
 
 /*
-P.P.:
 CREATE DATABASE chat_room;
 
-P.P.:
 user chat_room;
 
-P.P.:
 CREATE DATABASE chat_room;
 
 user chat_room;
@@ -95,3 +89,6 @@ CREATE TABLE `friend_ship` (
   `states` tinyint NOT NULL COMMENT '验证消息的状态，0为拒绝或删除，1为正在验证，2为好友'
 );
  */
+    }
+
+}
