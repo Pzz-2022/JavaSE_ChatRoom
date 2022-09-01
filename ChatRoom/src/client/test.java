@@ -1,28 +1,10 @@
 package client;
 
-
-import common.entity.Message;
-import common.entity.Type;
-import javafx.application.Application;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.scene.image.Image;
-import javafx.stage.Stage;
-import javafx.stage.StageStyle;
-import common.entity.User;
-
-import java.util.Date;
-
 public class test {
     public static void main(String[] args) {
         System.out.println("Hello World");
     }
 /*
-CREATE DATABASE chat_room;
-
-user chat_room;
-
 CREATE DATABASE chat_room;
 
 user chat_room;
