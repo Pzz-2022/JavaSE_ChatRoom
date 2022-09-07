@@ -195,7 +195,10 @@ public class ClientReadThread extends Thread {
                                     content = content.substring(content.indexOf(group));
                                     content = content.replaceFirst(regex, "");
                                 }
-                                //contentHBox.getChildren().add(new Label(content));
+//                                contentHBox.getChildren().add(new Label(content));
+                                for (int i = 0; i < content.length(); i++) {
+                                    contentHBox.getChildren().add(new Label(content.charAt(i) + ""));
+                                }
 
                                 VBox contentVBox = new VBox(10);
                                 {

@@ -13,7 +13,7 @@ import javax.mail.internet.MimeMessage;
 
 public class SendEmail {
     //发送验证码的工具类
-    public static String to(String toEmail, String url) {
+    public static String to(String toEmail, String name) {
         // 收件人电子邮箱
         //String to = "951913164@qq.com";
 
@@ -54,7 +54,7 @@ public class SendEmail {
 
             // 设置消息体
             String code = Get.getCode();
-            message.setText("亲爱的 " + url + ":\r\n感谢您注册 PP聊天室。为保证用户正常使用我们的系统，请您输入验证码以帮助我们确认您的电子邮件地址有效：\r\n"
+            message.setText("亲爱的 " + name + ":\r\n感谢您注册 PP聊天室。为保证用户正常使用我们的系统，请您输入验证码以帮助我们确认您的电子邮件地址有效：\r\n"
                     + code +"\r\n此邮件由系统自动发送，请勿回复。\r\n" + new Date());
 
             // 发送消息
