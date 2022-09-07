@@ -348,7 +348,7 @@ public class MainController implements Initializable {
 
                             HBox hBox = new HBox(10);
                             hBox.setPrefWidth(240);
-                            hBox.setPrefHeight(50);
+                            //hBox.setPrefHeight(50);
                             hBox.setAlignment(Pos.CENTER_LEFT);
                             hBox.getChildren().addAll(touxiang, vBox);
 
@@ -801,7 +801,7 @@ public class MainController implements Initializable {
 
                             HBox hBox = new HBox(10);
                             hBox.setPrefWidth(240);
-                            hBox.setPrefHeight(50);
+                            //hBox.setPrefHeight(50);
                             hBox.setAlignment(Pos.CENTER_LEFT);
                             hBox.getChildren().addAll(touxiang, vBox);
 
