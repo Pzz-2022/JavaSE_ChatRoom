@@ -144,11 +144,13 @@ public class ClientReadThread extends Thread {
 
                         if (!empty)
                             if (item.getType() == Type.TEXT) {
+                                //发送者的头像
                                 ImageView touxiang = new ImageView("common/image/head/head(" + MainController.users.get(item.getFromUser()).getHeadPortrait() + ").jpeg");
                                 touxiang.setPreserveRatio(true);
                                 touxiang.setFitHeight(40);
 
                                 //Label content = new Label((String) item.getObject());
+                                //设置点击头像打开的资料界面
                                 if (item.getFromUser().equals(userLogin.getUid())) {
                                     //content.setBackground(new Background(new BackgroundFill(new Color(0,0.8,0.9,0.7),null,null)));
                                     touxiang.setOnMouseClicked(new EventHandler<MouseEvent>() {
@@ -162,7 +164,7 @@ public class ClientReadThread extends Thread {
                                         }
                                     });
                                 } else {
-                                    //content.setBackground(new Background(new BackgroundFill(new Color(0.8, 0.8, 0, 0.9), null, null)));
+                                    //content.setBackground(new Background(new BackgroundFill(new Color(0.8,0.8,0,0.9),null,null)));
                                     touxiang.setOnMouseClicked(new EventHandler<MouseEvent>() {
                                         @Override
                                         public void handle(MouseEvent event) {
@@ -195,7 +197,7 @@ public class ClientReadThread extends Thread {
                                     content = content.substring(content.indexOf(group));
                                     content = content.replaceFirst(regex, "");
                                 }
-//                                contentHBox.getChildren().add(new Label(content));
+                                //contentHBox.getChildren().add(new Label(content));
                                 for (int i = 0; i < content.length(); i++) {
                                     contentHBox.getChildren().add(new Label(content.charAt(i) + ""));
                                 }
@@ -203,6 +205,7 @@ public class ClientReadThread extends Thread {
                                 VBox contentVBox = new VBox(10);
                                 {
                                     int count = contentHBox.getChildren().size();
+
                                     HBox hBox = new HBox();
                                     for (int i = 0; i < count; i++) {
                                         if (i % 50 == 0) {
@@ -232,7 +235,6 @@ public class ClientReadThread extends Thread {
                                     hBox.getChildren().addAll(touxiang, contentVBox);
                                     this.setGraphic(hBox);
                                 }
-
                                 Platform.runLater(() -> {
                                     mainController.recordListView.scrollTo(item);
                                 });
