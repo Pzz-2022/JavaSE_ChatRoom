@@ -25,4 +25,14 @@ D:\Software\FileRecv\ChatRoom\ServerFileRecv
 ![char_record表](image.png)
 
 
-#### 示例![输入图片说明](image/example.png)
+#### 示例
+![功能点](image/%E5%8A%9F%E8%83%BD%E7%82%B9.png)
+![聊天主体图](image/example.png)
+![登录](image/example5.png)
+![输入图片说明](image/example6.png)
+![注册](image/example7.png)
+![编辑资料](image/example1.png)
+![查看资料](image/example2.png)
+![添加好友](image/example3.png)
+![添加好友验证](image/example8.png)
+![创建群](image/example4.png)
