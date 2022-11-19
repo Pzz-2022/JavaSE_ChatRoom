@@ -348,7 +348,7 @@ public class MainController implements Initializable {
 
                             HBox hBox = new HBox(10);
                             hBox.setPrefWidth(240);
-                            //hBox.setPrefHeight(50);
+                            hBox.setPrefHeight(50);
                             hBox.setAlignment(Pos.CENTER_LEFT);
                             hBox.getChildren().addAll(touxiang, vBox);
 
@@ -511,6 +511,7 @@ public class MainController implements Initializable {
         refreshAll();
     }
 
+    // 聊天记录的一个渲染到界面方法
     public void changeChatRecord(String uid) {
         //recordListView.setFixedCellSize(50);
         recordListView.setCellFactory(new Callback<ListView<Message>, ListCell<Message>>() {
@@ -582,17 +583,22 @@ public class MainController implements Initializable {
                                 }
 
                                 VBox contentVBox = new VBox(10);
+
+                                // 设置消息内容格式（换行）
                                 {
                                     int count = contentHBox.getChildren().size();
-
                                     HBox hBox = new HBox();
                                     for (int i = 0; i < count; i++) {
                                         if (i % 50 == 0) {
+                                            // 设置文字居中
+                                            hBox.setAlignment(Pos.CENTER);
                                             contentVBox.getChildren().add(hBox);
                                             hBox = new HBox();
                                         }
                                         hBox.getChildren().add(contentHBox.getChildren().get(0));
                                         if (i == count - 1) {
+                                            // 设置文字居中
+                                            hBox.setAlignment(Pos.CENTER);
                                             contentVBox.getChildren().add(hBox);
                                         }
                                     }
@@ -600,7 +606,6 @@ public class MainController implements Initializable {
 
                                 HBox hBox = new HBox(15);
                                 hBox.setPrefWidth(600);
-                                //hBox.setPrefHeight(50);
                                 if (item.getFromUser().equals(userLogin.getUid())) {
                                     hBox.setAlignment(Pos.CENTER_RIGHT);
                                     contentHBox.setAlignment(Pos.CENTER_RIGHT);
@@ -728,7 +733,6 @@ public class MainController implements Initializable {
 
                                 HBox hBox = new HBox(15);
                                 hBox.setPrefWidth(600);
-                                //hBox.setPrefHeight(50);
                                 if (item.getFromUser().equals(userLogin.getUid())) {
                                     hBox.setAlignment(Pos.CENTER_RIGHT);
                                     contentHBox.setAlignment(Pos.CENTER_RIGHT);
