@@ -1,10 +1,10 @@
-# gitstudy
+# JavaSE_ChatRoom
 
 #### 介绍
-这个人很懒......
+一个基于JavaSE中初级语法、面向对象、IO流、多线程，JDBC，TCP协议，MySQL，JavaFX的聊天室项目。
 
 #### 软件架构
-我也不知道瞎敲的
+MVC三层架构
 
 
 #### 安装教程
