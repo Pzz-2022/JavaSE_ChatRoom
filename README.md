@@ -23,3 +23,6 @@ D:\Software\FileRecv\ChatRoom\ServerFileRecv
 ![user表](https://foruda.gitee.com/images/1660360646403907048/屏幕截图.png "屏幕截图.png")
 ![friend_ship表](https://foruda.gitee.com/images/1660360676816709873/屏幕截图.png "屏幕截图.png")
 ![char_record表](image.png)
+
+
+#### 示例![输入图片说明](image/example.png)
