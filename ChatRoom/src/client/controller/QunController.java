@@ -1,7 +1,7 @@
 package client.controller;
 
 import client.ClientMethod;
-import common.entity.Check;
+import common.util.Check;
 import common.entity.Message;
 import common.entity.Type;
 import common.entity.User;
@@ -11,7 +11,6 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
-import server.MainServer;
 
 import java.util.ArrayList;
 

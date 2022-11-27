@@ -1,15 +1,11 @@
-package common.entity;
+package common.util;
 
-import java.awt.*;
-import java.io.File;
-import java.io.IOException;
-import java.io.PushbackInputStream;
 import java.security.MessageDigest;
 import java.util.Random;
 
 public class Get {
     //工具类，Get一个随机的验证码或者是MD5加密的数据
-        public static String getCode(){
+    public static String getCode() {
         StringBuilder code = new StringBuilder();
         String data = "qwertyuiopasdfghjkzxcvbnmQWERTYUOPASDFGHJKLZXCVBNM0123456789";
         //验证码取消了大写的i和小写的l，因为真的分不清，提高了用户的体验（我在测试的时候老来这两很烦）
@@ -19,13 +15,14 @@ public class Get {
             int index = r.nextInt(data.length());
             char c = data.charAt(index);
             code.append(c);
-            if(c>'0'&&c<'9')
+            if (c > '0' && c < '9')
                 k++;
         }
-        if(k == 0)
+        if (k == 0)
             code = new StringBuilder(r.nextInt(10) + code.substring(1));
         return code.toString();
     }
+
     public static String getMD5(String str) throws Exception {
 
         StringBuilder MD5 = new StringBuilder();
@@ -47,5 +44,4 @@ public class Get {
         }
         return MD5.toString();
     }
-
 }

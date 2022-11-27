@@ -1,4 +1,6 @@
-package common.entity;
+package common.util;
+
+import common.util.Get;
 
 import java.util.Date;
 import java.util.Properties;

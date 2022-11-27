@@ -3,6 +3,7 @@ package server;
 
 import client.UserLogin;
 import common.entity.*;
+import common.util.SendEmail;
 import common.util.SocketUtil;
 import server.Mysql.GetMysql;
 import common.entity.User;
@@ -11,9 +12,6 @@ import java.io.*;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.Map;
-
-import static client.controller.MainController.chatRecordMap;
-import static client.controller.MainController.userLogin;
 
 public class ServerRunnable implements Runnable {
     //自定义的任务类，处理来自客户端的消息

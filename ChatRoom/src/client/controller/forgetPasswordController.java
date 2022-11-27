@@ -1,9 +1,9 @@
 package client.controller;
 
 import client.ClientMethod;
-import common.entity.Check;
+import common.util.Check;
 import common.entity.EmailCode;
-import common.entity.Get;
+import common.util.Get;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;

@@ -2,6 +2,8 @@ package client.controller;
 
 import client.ClientMethod;
 import common.entity.*;
+import common.util.Check;
+import common.util.Get;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
