@@ -10,9 +10,9 @@ import java.sql.*;
 import java.util.Random;
 
 public class GetMysql {
-    //存放所有关于数据库的操作方法
+    // 存放所有关于数据库的操作方法(JDBC)
     public static Connection getConnection() throws Exception {
-        //连接MySQL数据库
+        // 连接MySQL数据库
         String url = "jdbc:mysql:///chat_room";
         String user = "root";
         String password = "pz020525";
@@ -21,7 +21,7 @@ public class GetMysql {
     }
 
     public static String selectEmail(String email) throws Exception {
-        //查询Email的用户id
+        // 通过Email查询用户id
         String sql = "select uid from user where email = ?";
         PreparedStatement preparedStatement = MainServer.conn.prepareStatement(sql);
 
@@ -35,43 +35,39 @@ public class GetMysql {
     }
 
     public static boolean selectUID(String uid) throws Exception {
-        //查看数据库是否有这个id唯一键存在
+        // 查看数据库是否有这个id唯一键存在
         String sql = "select uid from user where uid = ?";
         PreparedStatement preparedStatement = MainServer.conn.prepareStatement(sql);
 
         preparedStatement.setString(1, uid);
 
         ResultSet resultSet = preparedStatement.executeQuery();
-        if (resultSet.next()) {
-            return true;
-        }
-        return false;
+        // 有就返回真 没有返回假
+        return resultSet.next();
     }
 
     public static boolean register(User user) throws Exception {
-        //注册，给数据库增加一个用户
+        // 注册 给数据库增加一个用户（记录）
         String sql = "insert into user(uid,name,password,gender,age,email,head_portrait,signature) values(?,?,?,'" + user.getGender() + "',?,?,?,?)";
         PreparedStatement preparedStatement = MainServer.conn.prepareStatement(sql);
 
-        Random r = new Random();
         preparedStatement.setString(1, user.getUid());
         preparedStatement.setString(2, user.getName());
         preparedStatement.setString(3, user.getPassword());
         preparedStatement.setInt(4, user.getAge());
         preparedStatement.setString(5, user.getEmail());
         preparedStatement.setInt(6, user.getHeadPortrait());
-        if (user.getSignature()==null||user.getSignature().length()==0){
+        if (user.getSignature() == null || user.getSignature().length() == 0) {
             user.setSignature("这个少年很懒...");
         }
         preparedStatement.setString(7, user.getSignature());
 
         int count = preparedStatement.executeUpdate();
-        System.out.println(count);
         return count == 1;
     }
 
     public static UserLogin login(User user) throws Exception {
-        //登录，查询用户输入的账号密码是否正确
+        // 登录 查询用户输入的账号密码是否正确
         UserLogin userLogin = new UserLogin();
         String sql = "select * from user where uid = ? && password = ?";
         PreparedStatement preparedStatement = MainServer.conn.prepareStatement(sql);
@@ -95,7 +91,7 @@ public class GetMysql {
     }
 
     public static boolean upPassword(EmailCode emailCode) throws Exception {
-        //重置密码，更新用户的密码
+        // 重置密码，更新用户的密码
         String sql = "update user set password = ? where email = ?";
         PreparedStatement preparedStatement = MainServer.conn.prepareStatement(sql);
 
@@ -157,7 +153,7 @@ public class GetMysql {
         preparedStatement.setString(1, message.getFromUser());
         System.out.println(message.getFromUser());
         preparedStatement.setString(2, message.getToUser());
-        preparedStatement.setInt(3, (int)message.getObject());
+        preparedStatement.setInt(3, (int) message.getObject());
 
         int count = preparedStatement.executeUpdate();
         return count == 1;
@@ -207,18 +203,18 @@ public class GetMysql {
         preparedStatement.setString(2, message.getToUser());
         preparedStatement.setLong(3, message.getSendTime());
         preparedStatement.setString(4, (String) message.getObject());
-        int type =0;
-        switch (message.getType()){
+        int type = 0;
+        switch (message.getType()) {
             case TEXT:
                 //type=0;
                 break;
 
             case IMAGE:
-                type=1;
+                type = 1;
                 break;
 
             case FILE:
-                type=2;
+                type = 2;
                 break;
         }
         preparedStatement.setInt(5, type);

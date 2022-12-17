@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.Map;
 
 public class ServerRunnable implements Runnable {
-    //自定义的任务类，处理来自客户端的消息
+    // 自定义的任务类，处理来自客户端的消息
     private Socket socket;
 
     public ServerRunnable(Socket socket) {
@@ -286,10 +286,10 @@ public class ServerRunnable implements Runnable {
                         InputStream fileInputStream = new FileInputStream(file);
                         byte[] bytes = new byte[1024 * 8];
                         int len;
-                        int sum =0;
+                        int sum = 0;
                         while ((len = fileInputStream.read(bytes)) != -1) {
-                            outputStream.write(bytes, 0 , len);
-                            sum+=len;
+                            outputStream.write(bytes, 0, len);
+                            sum += len;
                         }
                         System.out.println(sum);
                         fileInputStream.close();
@@ -301,10 +301,10 @@ public class ServerRunnable implements Runnable {
                         OutputStream fileOutputStream = new FileOutputStream(file1);
                         byte[] bytes1 = new byte[1024 * 8];
                         int len1;
-                        int sum1 =0;
-                        while ((len1 = inputStream.read(bytes1))!=-1){
+                        int sum1 = 0;
+                        while ((len1 = inputStream.read(bytes1)) != -1) {
                             fileOutputStream.write(bytes1, 0, len1);
-                            sum1+=len1;
+                            sum1 += len1;
                         }
                         System.out.println(sum1);
                         fileOutputStream.close();

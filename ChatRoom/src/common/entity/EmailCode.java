@@ -1,7 +1,5 @@
 package common.entity;
 
-import com.sun.xml.internal.ws.api.ha.StickyFeature;
-
 import java.io.Serializable;
 
 public class EmailCode implements Serializable {
