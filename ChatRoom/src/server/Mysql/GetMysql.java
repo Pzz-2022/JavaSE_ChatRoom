@@ -7,7 +7,6 @@ import common.entity.User;
 import server.MainServer;
 
 import java.sql.*;
-import java.util.Random;
 
 public class GetMysql {
     // 存放所有关于数据库的操作方法(JDBC)

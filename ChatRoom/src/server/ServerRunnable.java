@@ -184,22 +184,26 @@ public class ServerRunnable implements Runnable {
                         boolean b1 = GetMysql.upFriend(message);
                         objectOutputStream.writeObject(b1);
                         objectOutputStream.flush();
+                        // 将关系在所有好友关系里面更新
                         for (Message message1 : MainServer.allFriendShipList) {
                             if (message1.getFromUser().equals(message.getFromUser()) && message1.getToUser().equals(message.getToUser())) {
                                 message1.setObject(message.getObject());
                                 break;
                             }
                         }
-                        //更新好友状态
+                        // 更新好友状态
                         if (b1) {
+                            // 如果是加入群 且为同意状态，则将该好友添加至群的对应的Map中
                             if (MainServer.users.get(message.getToUser()).getHeadPortrait() == 100 && (int) message.getObject() == 2) {
                                 MainServer.groupUid.get(message.getToUser()).add(message.getFromUser());
                             }
+                            // 查看是否在线 若在线则将状态发送过去 更新客户端好友状态
                             if (MainServer.socketMap.containsKey(message.getFromUser()) && (int) message.getObject() == 2) {
                                 OutputStream outputStream1 = MainServer.socketMap.get(message.getFromUser()).getOutputStream();
                                 ObjectOutputStream objectOutputStream1 = new MyObjectOutputStream(outputStream1);
                                 objectOutputStream1.writeObject(message);
                                 objectOutputStream1.flush();
+                            // 如果拒绝了 则也将新状态发送过去 双方都发送的原因是将好友申请给删除
                             } else if ((int) message.getObject() == 0) {
                                 if (MainServer.socketMap.containsKey(message.getFromUser())) {
                                     OutputStream outputStream1 = MainServer.socketMap.get(message.getFromUser()).getOutputStream();
@@ -223,6 +227,7 @@ public class ServerRunnable implements Runnable {
                         message.setType(Type.UP_FRIEND_SHIP);
                         objectOutputStream.writeObject(b2);
                         objectOutputStream.flush();
+                        // 将服务端的群好友关系全部删除
                         for (Message message1 : MainServer.allFriendShipList) {
                             if (message1.getToUser().equals(message.getToUser())) {
                                 message1.setObject(message.getObject());
@@ -232,6 +237,7 @@ public class ServerRunnable implements Runnable {
 
                         if (b2) {
                             for (String s : MainServer.groupUid.get(message.getToUser())) {
+                                // 查看群成员是否在线 若在线将实时解除群聊
                                 if (MainServer.socketMap.containsKey(s)) {
                                     OutputStream outputStream1 = MainServer.socketMap.get(s).getOutputStream();
                                     ObjectOutputStream objectOutputStream1 = new MyObjectOutputStream(outputStream1);
@@ -240,6 +246,8 @@ public class ServerRunnable implements Runnable {
                                     objectOutputStream1.flush();
                                 }
                             }
+
+                            // 将group删除
                             MainServer.groupUid.get(message.getToUser()).clear();
                             MainServer.groupUid.remove(message.getToUser());
                         }
@@ -253,6 +261,7 @@ public class ServerRunnable implements Runnable {
                         //文件类型
                         GetMysql.addChatRecord(message);
                         MainServer.allChatRecord.add(message);
+                        // 判断接收的人是否在线 如果在线将发送给该管道
                         if (MainServer.socketMap.containsKey(message.getToUser())) {
                             OutputStream outputStream1 = MainServer.socketMap.get(message.getToUser()).getOutputStream();
                             ObjectOutputStream objectOutputStream1 = new MyObjectOutputStream(outputStream1);
@@ -262,6 +271,7 @@ public class ServerRunnable implements Runnable {
                             objectOutputStream.flush();
                             break;
                         } else if (MainServer.users.get(message.getToUser()).getHeadPortrait() == 100) {
+                            // 如果是发送到群里 则将遍历群成员发送消息
                             System.out.println(MainServer.groupUid.get(message.getToUser()).toString());
                             for (String groupUid : MainServer.groupUid.get(message.getToUser())) {
                                 if (MainServer.socketMap.containsKey(groupUid) && !groupUid.equals(message.getFromUser())) {
@@ -282,6 +292,7 @@ public class ServerRunnable implements Runnable {
                         break;
 
                     case APPLY_FILE:
+                        // 客户端申请保存文件从服务端
                         File file = new File(MainServer.ServerFileRecv + message.getObject());
                         InputStream fileInputStream = new FileInputStream(file);
                         byte[] bytes = new byte[1024 * 8];
@@ -297,6 +308,7 @@ public class ServerRunnable implements Runnable {
                         break;
 
                     case APPLY_FILE_TO_SERVER:
+                        // 客户端上传文件
                         File file1 = new File(MainServer.ServerFileRecv + message.getObject());
                         OutputStream fileOutputStream = new FileOutputStream(file1);
                         byte[] bytes1 = new byte[1024 * 8];

@@ -18,12 +18,12 @@ import java.util.Map;
 import java.util.concurrent.*;
 
 public class MainServer {
-    //定义一个线程池 处理来自客户端的线程任务
+    // 定义一个线程池 处理来自客户端的线程任务
     private static ExecutorService pool = new ThreadPoolExecutor(20,
             20, 6, TimeUnit.SECONDS, new ArrayBlockingQueue<>(5),
             Executors.defaultThreadFactory(), new ThreadPoolExecutor.AbortPolicy());
 
-    //与数据库的连接 conn
+    // 与数据库的连接 conn
     public static Connection conn;
     public static Map<String, User> users = new HashMap<>();//储存所有user信息
     public static Map<String, Socket> socketMap = new HashMap<>();//储存socket管道
@@ -36,7 +36,9 @@ public class MainServer {
     static {
         //初始化所有数据
         try {
+            // 得到数据库连接 在数据库操作时使用的conn
             conn = GetMysql.getConnection();
+
             ResultSet allUser = GetMysql.selectAllUser();
             while (allUser.next()) {
                 addUserToServer(allUser);
@@ -46,6 +48,7 @@ public class MainServer {
             ResultSet friendShip = GetMysql.selectAllFriendShip();
             while (friendShip.next()) {
                 addFriendShipToServer(friendShip);
+                // 如果是群 先判断是否在group中存在 将群的成员全部放进group里面
                 if (users.get(friendShip.getString("uid2")).getHeadPortrait()==100){
                     if (!groupUid.containsKey(friendShip.getString("uid2")))
                         groupUid.put(friendShip.getString("uid2"), new ArrayList<>());
@@ -82,7 +85,7 @@ public class MainServer {
     }
 
     static void addUserToServer(ResultSet resultSet) throws SQLException {
-        //初始化user数据的方法
+        //初始化user数据的方法  将数据库中的数据取出来 存进内存
         User user = new User();
         user.setUid(resultSet.getString("uid"));
         user.setName(resultSet.getString("name"));
@@ -97,7 +100,7 @@ public class MainServer {
     }
 
     static void addFriendShipToServer(ResultSet resultSet) throws SQLException {
-        //初始化好友数据的方法
+        // 初始化好友数据的方法
         Message message = new Message();
         message.setFromUser(resultSet.getString("uid1"));
         message.setToUser(resultSet.getString("uid2"));

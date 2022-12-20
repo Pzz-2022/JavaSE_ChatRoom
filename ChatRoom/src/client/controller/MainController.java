@@ -38,10 +38,13 @@ public class MainController implements Initializable {
     //登录后的聊天界面的控制类
     @FXML
     public Label gerenBirthdayLabel;
+
     @FXML
     public ScrollPane emojiScrollPane;
+
     @FXML
     public SplitPane pane;
+
     @FXML
     private Label gerenqianmingLabel;
 
@@ -714,7 +717,7 @@ public class MainController implements Initializable {
                                 VBox vBox = new VBox(20);
                                 vBox.setAlignment(Pos.CENTER);
                                 Label fileNameLabel = new Label(((String) item.getObject())
-                                        .substring(((String) item.getObject()).lastIndexOf('_')+1));
+                                        .substring(((String) item.getObject()).lastIndexOf('_') + 1));
                                 fileNameLabel.setMaxWidth(300);
                                 Button openFileButton = new Button("打开文件");
                                 openFileButton.setOnAction(new EventHandler<ActionEvent>() {
@@ -727,9 +730,9 @@ public class MainController implements Initializable {
                                         }
                                     }
                                 });
-                                vBox.getChildren().addAll(fileNameLabel,openFileButton);
+                                vBox.getChildren().addAll(fileNameLabel, openFileButton);
                                 HBox contentHBox = new HBox(0);
-                                contentHBox.getChildren().addAll(contentImageView,vBox);
+                                contentHBox.getChildren().addAll(contentImageView, vBox);
 
                                 HBox hBox = new HBox(15);
                                 hBox.setPrefWidth(600);
