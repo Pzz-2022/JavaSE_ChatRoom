@@ -1,7 +1,7 @@
 # JavaSE_ChatRoom
 
 #### 介绍
-一个基于JavaSE中初级语法、面向对象、IO流、多线程，JDBC，TCP协议，MySQL，JavaFX的聊天室项目。
+一个基于JavaSE中初级语法、面向对象、IO流、多线程，JDBC，TCP协议，MySQL，JavaFX的C/S聊天室项目。
 
 #### 软件架构
 MVC三层架构
