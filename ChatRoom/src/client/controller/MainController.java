@@ -121,10 +121,10 @@ public class MainController implements Initializable {
     public static Map<String, User> friendMap = userLogin.friendMap;
     public static Map<String, List<Message>> chatRecordMap = userLogin.chatRecordMap;
     public static List<Message> yanzhengList = new ArrayList<>();
-    //验证消息的数源
+    // 验证消息的数源
     public static ObservableList<User> itemsUser;
     public static ObservableList<Message> itemsRecord;
-    //数据源
+    // 作为可视化的数据源
 
 
     @Override
@@ -297,6 +297,7 @@ public class MainController implements Initializable {
         }
         emojiScrollPane.setContent(vBox);
 
+        // 表情的快速删除
         messageField.textProperty().addListener(new ChangeListener<String>() {
             @Override
             public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
@@ -386,7 +387,7 @@ public class MainController implements Initializable {
 
     @FXML
     public void tarenxingxi(MouseEvent event) throws IOException {
-        //写一个新的他人的个人信息窗口
+        // 打开一个新的他人的个人信息窗口
         Parent root = FXMLLoader.load(getClass().getResource("../fxml/haoyouziliao.fxml"));
         Stage stage = new Stage();
         stage.setScene(new Scene(root));
@@ -397,7 +398,7 @@ public class MainController implements Initializable {
 
     @FXML
     public void xiugaigerenxingxi(MouseEvent event) throws IOException {
-        //写一个自己的修改信息窗口
+        // 打开一个自己的修改信息窗口
         bianjiziliaoOnAction(null);
     }
 
@@ -516,7 +517,8 @@ public class MainController implements Initializable {
 
     // 聊天记录的一个渲染到界面方法
     public void changeChatRecord(String uid) {
-        //recordListView.setFixedCellSize(50);
+        // 设置为固定高度 好看一点
+        // recordListView.setFixedCellSize(50);
         recordListView.setCellFactory(new Callback<ListView<Message>, ListCell<Message>>() {
             @Override
             public ListCell<Message> call(ListView<Message> param) {

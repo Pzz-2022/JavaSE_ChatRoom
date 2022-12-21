@@ -131,6 +131,7 @@ public class ClientReadThread extends Thread {
     public void changeChatRecord(String uid, Message message) {
         Platform.runLater(() -> {
             MainController.itemsRecord.add(message);
+            mainController.changeChatRecord(uid);
         });
 
         mainController.recordListView.setFixedCellSize(50);
