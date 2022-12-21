@@ -6,16 +6,36 @@ import common.entity.Message;
 import common.entity.User;
 import server.MainServer;
 
+import java.io.InputStream;
 import java.sql.*;
+import java.util.Properties;
 
 public class GetMysql {
+    public static String url;
+    public static String username;
+    public static String password;
+
+    static {
+        // 反射的知识
+        InputStream inputStream = GetMysql.class.getClassLoader().getResourceAsStream("server/Mysql/db.properties");
+        // 读取Properties配置文件
+        Properties properties = new Properties();
+        try {
+            properties.load(inputStream);
+
+            url = properties.getProperty("url");
+            username = properties.getProperty("username");
+            password = properties.getProperty("password");
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     // 存放所有关于数据库的操作方法(JDBC)
     public static Connection getConnection() throws Exception {
         // 连接MySQL数据库
-        String url = "jdbc:mysql:///chat_room";
-        String user = "root";
-        String password = "pz020525";
-        Connection conn = DriverManager.getConnection(url, user, password);
+        Connection conn = DriverManager.getConnection(url, username, password);
         return conn;
     }
 
