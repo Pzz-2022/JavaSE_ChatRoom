@@ -17,7 +17,7 @@ public class GetMysql {
 
     static {
         // 反射的知识
-        InputStream inputStream = GetMysql.class.getClassLoader().getResourceAsStream("server/Mysql/db.properties");
+        InputStream inputStream = GetMysql.class.getClassLoader().getResourceAsStream("db.properties");
         // 读取Properties配置文件
         Properties properties = new Properties();
         try {
