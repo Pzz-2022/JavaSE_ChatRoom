@@ -103,6 +103,7 @@ public class ClientReadThread extends Thread {
 
                     case TEXT:
                     case IMAGE:
+                    case FILE:
                         if (MainController.users.get(message.getToUser()).getHeadPortrait() != 100) {
                             MainController.chatRecordMap.get(message.getFromUser()).add(message);
                             if (userLogin.getSelectFriend().getUid().equals(message.getFromUser())) {
@@ -134,7 +135,7 @@ public class ClientReadThread extends Thread {
             mainController.changeChatRecord(uid);
         });
 
-        mainController.recordListView.setFixedCellSize(50);
+//        mainController.recordListView.setFixedCellSize(50);
         mainController.recordListView.setCellFactory(new Callback<ListView<Message>, ListCell<Message>>() {
             @Override
             public ListCell<Message> call(ListView<Message> param) {
@@ -408,7 +409,7 @@ public class ClientReadThread extends Thread {
 
                             HBox hBox = new HBox(10);
                             hBox.setPrefWidth(240);
-                            hBox.setPrefHeight(50);
+//                            hBox.setPrefHeight(50);
                             hBox.setAlignment(Pos.CENTER_LEFT);
                             hBox.getChildren().addAll(touxiang, vBox);
 

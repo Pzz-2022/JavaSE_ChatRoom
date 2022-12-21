@@ -42,7 +42,7 @@ public class QunController {
             messageLabel.setText("含有中文");
             return false;
         } else if (!Check.checkUid(uidField.getText())){
-            messageLabel.setText("含有英文");
+            messageLabel.setText("不符");
             return false;
         }
 
