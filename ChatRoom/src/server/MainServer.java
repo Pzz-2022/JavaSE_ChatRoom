@@ -84,7 +84,7 @@ public class MainServer {
         }
     }
 
-    static void addUserToServer(ResultSet resultSet) throws SQLException {
+    public static void addUserToServer(ResultSet resultSet) throws SQLException {
         //初始化user数据的方法  将数据库中的数据取出来 存进内存
         User user = new User();
         user.setUid(resultSet.getString("uid"));
@@ -99,7 +99,7 @@ public class MainServer {
         users.put(user.getUid(), user);
     }
 
-    static void addFriendShipToServer(ResultSet resultSet) throws SQLException {
+    public static void addFriendShipToServer(ResultSet resultSet) throws SQLException {
         // 初始化好友数据的方法
         Message message = new Message();
         message.setFromUser(resultSet.getString("uid1"));
@@ -109,7 +109,7 @@ public class MainServer {
         allFriendShipList.add(message);
     }
 
-    static void addChatRecordToServer(ResultSet resultSet) throws SQLException {
+    public static void addChatRecordToServer(ResultSet resultSet) throws SQLException {
         //初始化聊天记录的方法
         Message message = new Message();
         message.setFromUser(resultSet.getString("from_user"));
